@@ -14,25 +14,23 @@ function App() {
   };
 
   return (
-    <div className="px-8 py-32 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center flex-col xl:flex-row">
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-[#243e63]">
-          Découvrez notre <span className="bg-[#6415ff] text-white -skew-x-12 inline-block p-3 px-4">menu.</span>
-        </h1>
+    <div className="container">
+      <div className="flex header">
+        <h1>Découvrez notre <span className="banner">menu.</span></h1>
 
-        <div className="flex bg-slate-100 p-2 mt-6 xl:mt-0 rounded">
-          <div onClick={() => setFilter('all')} className={`mr-3 py-2 px-6 cursor-pointer rounded font-medium duration-200 ${filter == 'all' ? 'bg-[#6415ff] text-white' : 'text-slate-500 hover:bg-slate-200'}`}>Tout</div>
-          <div onClick={() => setFilter('meat')} className={`mr-3 py-2 px-6 cursor-pointer rounded font-medium duration-200 ${filter == 'meat' ? 'bg-[#6415ff] text-white' : 'text-slate-500 hover:bg-slate-200'}`}>Viandes</div>
-          <div onClick={() => setFilter('flower')} className={`mr-3 py-2 px-6 cursor-pointer rounded font-medium duration-200 ${filter == 'flower' ? 'bg-[#6415ff] text-white' : 'text-slate-500 hover:bg-slate-200'}`}>Légumes</div>
+        <div className="flex filters">
+          <div onClick={() => setFilter('all')} className={`filter ${filter == 'all' ? 'active' : ''}`}>Tout</div>
+          <div onClick={() => setFilter('meat')} className={`filter ${filter == 'meat' ? 'active' : ''}`}>Viandes</div>
+          <div onClick={() => setFilter('flower')} className={`filter ${filter == 'flower' ? 'active' : ''}`}>Légumes</div>
         </div>
       </div>
 
-      {selected && <div className="text-center my-16">
-        <h1 className="text-3xl text-emerald-500 mb-12">Vous avez commandé le repas {selected.title}</h1>
-        <img className="h-64 w-64 mx-auto object-cover rounded-t" src={selected.imageSrc} alt={selected.title} />
+      {selected && <div className="selected">
+        <h1>Vous avez commandé le repas {selected.title}</h1>
+        <img src={selected.imageSrc} alt={selected.title} />
       </div>}
 
-      {!selected && <div className="flex flex-wrap -mx-6 mt-6">
+      {!selected && <div className="flex meal-list">
         {meals.filter(meal => filter == 'all' || filter == meal.type).map((meal, key) => <Meal meal={meal} key={key} onClick={() => selectMeal(meal)} />)}
       </div>}
     </div>
