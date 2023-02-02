@@ -4,7 +4,7 @@ import sourceMeals from './meals';
 
 function App() {
   let [filter, setFilter] = useState('all');
-  let [meals, setMeals] = useState(sourceMeals);
+  let [meals] = useState(sourceMeals);
   let [selected, setSelected] = useState(null);
 
   const selectMeal = (meal) => {
@@ -19,9 +19,9 @@ function App() {
         <h1>Découvrez notre <span className="banner">menu.</span></h1>
 
         <div className="flex filters">
-          <div onClick={() => setFilter('all')} className={`filter ${filter == 'all' ? 'active' : ''}`}>Tout</div>
-          <div onClick={() => setFilter('meat')} className={`filter ${filter == 'meat' ? 'active' : ''}`}>Viandes</div>
-          <div onClick={() => setFilter('flower')} className={`filter ${filter == 'flower' ? 'active' : ''}`}>Légumes</div>
+          <div onClick={() => setFilter('all')} className={`filter ${filter === 'all' ? 'active' : ''}`}>Tout</div>
+          <div onClick={() => setFilter('meat')} className={`filter ${filter === 'meat' ? 'active' : ''}`}>Viandes</div>
+          <div onClick={() => setFilter('flower')} className={`filter ${filter === 'flower' ? 'active' : ''}`}>Légumes</div>
         </div>
       </div>
 
@@ -31,7 +31,7 @@ function App() {
       </div>}
 
       {!selected && <div className="flex meal-list">
-        {meals.filter(meal => filter == 'all' || filter == meal.type).map((meal, key) => <Meal meal={meal} key={key} onClick={() => selectMeal(meal)} />)}
+        {meals.filter(meal => filter === 'all' || filter === meal.type).map((meal, key) => <Meal meal={meal} key={key} onClick={() => selectMeal(meal)} />)}
       </div>}
     </div>
   );
