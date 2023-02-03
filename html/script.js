@@ -1,17 +1,24 @@
 // Menu mobile
 const mobileMenu = document.querySelector('.mobile-menu');
-const openButton = document.querySelector('.open');
-const closeButton = document.querySelector('.closed');
+const burgerButton = document.querySelector('.closed');
+const closeButton = document.querySelector('.open');
 
-document.querySelector('.closed').addEventListener('click', (event) => {
-    event.target.style.display = 'none';
-    openButton.style.display = 'block';
+// On ouvre le menu en cliquant sur le burger
+burgerButton.addEventListener('click', (event) => {
+    // Si on utilise event.target, attention, ce n'est pas forcément le button
+    // mais ça peut être le svg dedans ou un élément qui est dans le bouton.
+    // Le event.currentTarget est forcément l'élément sur lequel on a mis l'événement
+    // au clic.
+    console.log(event.target, event.currentTarget);
+    burgerButton.style.display = 'none';
+    closeButton.style.display = 'block';
     mobileMenu.style.display = 'block';
 });
 
-document.querySelector('.open').addEventListener('click', (event) => {
-    event.target.style.display = 'none';
-    closeButton.style.display = 'block';
+// On ferme le menu en cliquant la croix
+closeButton.addEventListener('click', () => {
+    closeButton.style.display = 'none';
+    burgerButton.style.display = 'block';
     mobileMenu.style.display = 'none';
 });
 
@@ -19,10 +26,14 @@ document.querySelector('.open').addEventListener('click', (event) => {
 const allDivs = document.querySelectorAll('#section-1 .w-1\\/2');
 const titleElement = document.querySelector('#title');
 
-document.querySelector('.order-now').addEventListener('click', () => {
+document.querySelector('.order-now').addEventListener('click', (event) => {
+    event.preventDefault();
+
+    // Cacher les divs et afficher le titre
     allDivs.forEach(el => el.style.display = 'none');
     titleElement.style.display = 'block';
 
+    // Au bout de 5 secondes, je réaffiche les divs et je cache le titre
     setTimeout(() => {
         allDivs.forEach(el => el.style.display = 'block');
         titleElement.style.display = 'none';
@@ -43,8 +54,11 @@ const yearElement = document.querySelector('#year');
 
 document.querySelector('.btn-year').addEventListener('click', (event) => {
     event.preventDefault();
+    let button = event.currentTarget; // le bouton qui est cliqué
 
-    yearElement.innerHTML = parseInt(yearElement.innerHTML) + parseInt(event.target.dataset.year);
+    // Le parseInt nous assure qu'on travaille bien avec des entiers et pas des chaines de
+    // caractères ('5' + '1' = '51')
+    yearElement.innerHTML = parseInt(yearElement.innerHTML) + parseInt(button.dataset.year);
 });
 
 // Random numbers
@@ -52,15 +66,15 @@ const random = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
 
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 document.querySelector('.btn-random').addEventListener('click', (event) => {
     event.preventDefault();
 
-    document.querySelector('#orders-stat').innerHTML = random(99, 99999)+'+';
-    document.querySelector('#customers-stat').innerHTML = random(99, 99999)+'+';
-    document.querySelector('#chefs-stat').innerHTML = random(99, 99999)+'+';
+    document.querySelector('#orders-stat').innerHTML = random(1, 99999)+'+';
+    document.querySelector('#customers-stat').innerHTML = random(1, 99999)+'+';
+    document.querySelector('#chefs-stat').innerHTML = random(1, 99999)+'+';
 });
 
 // Formulaire
@@ -70,12 +84,17 @@ const titleForm = document.querySelector('#title-form');
 document.querySelector('#form').addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const form = event.target;
-    emailElement.value = '';
+    // Si le champ est vide, on ne fait rien
+    if (emailElement.value === '') {
+        return; // On arrête le code
+    }
+
+    const form = event.currentTarget;
 
     form.style.display = 'none';
-    titleForm.style.display = 'flex';
+    titleForm.style.display = 'block';
     titleForm.innerHTML = 'Merci '+emailElement.value;
+    emailElement.value = ''; // Je vide le champ après l'envoi du formulaire
 
     setTimeout(() => {
         form.style.display = 'flex';
