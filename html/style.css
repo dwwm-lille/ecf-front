@@ -1,8 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Inter, sans-serif;
     margin: 0;
     color: #243e63;
-    box-sizing: border-box;
     padding-top: 32px;
 }
 
@@ -30,7 +33,7 @@ input, button {
 }
 
 .mobile-menu {
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 0;
     left: 0;
@@ -80,7 +83,6 @@ input, button {
     border: 0;
     cursor: pointer;
     z-index: 1;
-    position: fixed;
     top: 40px;
     right: 50px;
 }
@@ -187,11 +189,10 @@ input, button {
 #blob-3 {
     left: initial;
     right: 0;
-    bottom: 0;
     width: 256px;
-    height: 600px;
+    height: 256px;
     opacity: 0.25;
-    transform: translate(98px, 160px);
+    transform: translate(98px, 10px);
 }
 
 .dot {
@@ -201,7 +202,8 @@ input, button {
     width: 128px;
     height: 128px;
     z-index: -1;
-    fill: #d9c5ff;
+    color: #d9c5ff;
+    fill: currentColor;
 }
 
 #dot-1 {
@@ -462,6 +464,7 @@ footer .border {
     line-height: 1.5em;
     color: #4a5568;
     background-color: #e2e8f0;
+    transition: 0.5s;
 }
 
 .newsletter-form form input:hover {
@@ -470,10 +473,16 @@ footer .border {
 
 .newsletter-form form input:focus {
     outline: 0;
+    border-color: #6416ff;
 }
 
+/* Pour changer la couleur du input en placeholder */
 ::placeholder {
     color: #9ca3af;
+}
+
+.newsletter-form form:hover input {
+    border-color: #6416ff;
 }
 
 .newsletter-form form button {
@@ -486,6 +495,7 @@ footer .border {
     border: 0;
     font-size: 14px;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 .newsletter-form form button:hover {
@@ -538,7 +548,7 @@ footer .social svg {
     display: block;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
     .mobile-menu, .open, .closed {
         display: none !important;
     }
